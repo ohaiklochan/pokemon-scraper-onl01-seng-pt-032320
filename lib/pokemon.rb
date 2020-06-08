@@ -1,14 +1,12 @@
 class Pokemon
-  attr_reader :name, :type, :id, :db, :hp
-  
-  @@all = []
+  attr_accessor :name, :type, :id, :db, :hp
 
-  def initialize (id, name, type, db, hp = nil)
+  def initialize (id, name, type, hp, db)
     @id = id
     @name = name
     @type = type
-    @db = db
     @hp = hp
+    @db = db
   end
 
   def self.save(name, type, db)
@@ -16,7 +14,7 @@ class Pokemon
       INSERT INTO pokemon (name, type) VALUES (?, ?);
     SQL
     
-  db.execute(sql, [name, type])
+    db.execute(sql, [name, type])
     
   end
 
@@ -33,6 +31,5 @@ class Pokemon
       UPDATE pokemon SET hp = ? WHERE id = ?;
     SQL
     db.execute(sql, [new_hp, id])
-  end
-  
+    end
 end
